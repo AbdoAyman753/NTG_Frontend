@@ -7,17 +7,18 @@ import { HomeComponent } from './pages/home/home.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HomeModule } from './pages/home/home.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     SignInComponent,
     NavbarComponent,
     FooterComponent
   ],
   imports: [
     BrowserModule,
+    HomeModule,
     AppRoutingModule
   ],
   providers: [],
