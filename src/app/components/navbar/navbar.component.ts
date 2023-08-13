@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  collapsed: boolean = false;
+  profileMenuToggle: boolean = false;
   toggleMenu: boolean = false;
+  cartMenuToggle: boolean = false;
 
 }
