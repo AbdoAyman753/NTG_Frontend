@@ -1,0 +1,31 @@
+.card-details-cont {
+  position: relative;
+  & > div + p {
+    height: 0;
+    overflow: hidden;
+  }
+
+  // &:hover > div +p{
+  //   // position: absolute;
+  //   height: 96px;
+  //   transition:all .3s ease-in-out;
+  // }
+}
+#textArea {
+  max-height: fit-content;
+}
+
+.card {
+  &:hover {
+    div + p {
+      // position: absolute;
+      height: 96px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    #addToCart {
+      visibility: visible;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
