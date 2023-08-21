@@ -9,5 +9,5 @@ export class NavbarComponent {
   profileMenuToggle: boolean = false;
   toggleMenu: boolean = false;
   cartMenuToggle: boolean = false;
-
+  cartItems: number = 10
 }
