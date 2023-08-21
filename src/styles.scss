@@ -3,7 +3,22 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
+html,
+body {
   height: 100%;
+  width: 100%;
+  font-family: "Comfortaa", cursive;
+  // font-family: "M PLUS Rounded 1c", sans-serif;
+  // font-family: "Press Start 2P", cursive;
+  // font-family: "Ubuntu", sans-serif;
 }
-
+body {
+  background: rgb(1, 104, 139);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 78, 129, 1) 25%,
+    rgb(0, 157, 210) 100%
+  );
+  // background-repeat:initial;
+  // background-color: #d6d7d8 !important;
+}
