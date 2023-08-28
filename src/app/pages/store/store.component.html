@@ -1,8 +1,7 @@
-<div class="flex flex-row justify-start">
-  <app-filter class="hidden lg:block mt-10"></app-filter>
+<div class="flex flex-col lg:flex-row justify-start">
+  <app-filter class="lg:mt-10"></app-filter>
   <div class="flex flex-row justify-center flex-wrap py-10 px-10 gap-8">
-    <app-item-card *ngFor="let hero of Heros" ></app-item-card>
+    <app-spinner *ngIf="!games.length" class="pt-[10rem] lg:ps-[31rem] lg:pt-[3rem]"></app-spinner>
+    <app-item-card *ngFor="let game of games" [game]="game"></app-item-card>
   </div>
 </div>
-
-
