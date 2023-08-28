@@ -4,17 +4,15 @@
   >
     <img
       class="w-full"
-      src="assets/darksouls.jpg"
+      src={{game?.coverImage}}
       alt="Sunset in the mountains"
     />
 
     <div id="textArea">
       <div class="px-6 py-4 card-details-cont">
-        <div class="font-bold text-xl mb-2 text-white">Dark Souls III</div>
+        <div class="font-bold text-xl mb-2 text-white">{{game?.title}}</div>
         <p class="text-slate-100 text-base max-h-[72px]">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
-          quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
-          nihil.
+          {{game?.description}}
         </p>
       </div>
     </div>
