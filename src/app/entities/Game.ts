@@ -5,4 +5,5 @@ export class Game {
   price: any;
   coverImage: any;
   releaseDate: any;
+  categories: any;
 }
