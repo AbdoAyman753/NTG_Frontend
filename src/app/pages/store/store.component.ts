@@ -13,7 +13,11 @@ export class StoreComponent implements OnInit {
 
   }
   ngOnInit() {
-    // this.gamesService.getGames().subscribe((data:any)=>{
-    // this.games = data;});
+    this.gamesService.getGames().subscribe((data:any)=>{
+    this.games = data;});
+  }
+
+  filterGames(event:any) {
+    this.games = event;
   }
 }
