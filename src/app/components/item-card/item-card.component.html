@@ -10,7 +10,7 @@
 
     <div id="textArea">
       <div class="px-6 py-4 card-details-cont">
-        <div class="font-bold text-xl mb-2 text-white">{{game?.title}}</div>
+        <div class="font-bold text-lg mb-2 text-white">{{game?.title}}</div>
         <p class="text-slate-100 text-base max-h-[72px]">
           {{game?.description}}
         </p>
@@ -18,19 +18,15 @@
     </div>
     <div class="px-6 pb-2">
       <span
+        *ngFor="let category of game?.categories"
         class="inline-block bg-slate-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-800 mr-2 mb-2"
-        >#open-world</span
-      >
-      <span
-        class="inline-block bg-slate-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-800 mr-2 mb-2"
-        >#fantacy</span
-      >
-      <span
-        class="inline-block bg-slate-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-800 mr-2 mb-2"
-        >#winter</span
+        >{{category?.name}}</span
       >
     </div>
-    <div class="flex justify-center">
+    <div class="flex flex-col items-center justify-center text-white text-xl">
+      <div>
+        {{game?.price | currency}}
+      </div>
       <!-- <span class="text-white pt-[3.5rem]">like   cart</span> -->
       <div id="addToCart" class="invisible text-white text-3xl">
         <i class="fa-solid fa-circle-plus"></i>
