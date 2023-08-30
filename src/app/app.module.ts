@@ -13,6 +13,7 @@ import { StoreModule } from './pages/store/store.module';
 import { CartComponent } from './pages/cart/cart.component';
 import { GamesService } from './services/games.service';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     SignInComponent,
     NavbarComponent,
     FooterComponent,
-    CartComponent
+    CartComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
