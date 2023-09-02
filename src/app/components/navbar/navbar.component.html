@@ -47,25 +47,37 @@
               [routerLinkActive]="['bg-gray-900', 'text-white']"
               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
               aria-current="page"
-              >Home</a
+              >
+              <i class="fa-solid fa-house inline pe-2"></i>Home</a
             >
             <a
               [routerLink]="['/store']"
               [routerLinkActive]="['bg-gray-900', 'text-white']"
               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-              >Store</a
+              ><i class="fa-solid fa-shop inline pe-2"></i>Store</a
             >
             <a
               [routerLink]="['/about']"
               [routerLinkActive]="['bg-gray-900', 'text-white']"
               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-              >About</a
+              ><i class="fa-solid fa-circle-info inline pe-2"></i>About</a
             >
+            <div class="min-w-[25rem]">
+
+            </div>
             <a
+              *ngIf="!authService.isLoggedIn()"
               [routerLink]="['/signin']"
               [routerLinkActive]="['bg-gray-900', 'text-white']"
+              class="ms-[50vw] text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+              ><i class="fa-solid fa-right-to-bracket inline pe-2"></i>Sign In</a
+            >
+            <a
+              *ngIf="!authService.isLoggedIn()"
+              [routerLink]="['/signup']"
+              [routerLinkActive]="['bg-gray-900', 'text-white']"
               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-              >Sign In</a
+              ><i class="fa-solid fa-file-signature inline pe-2"></i>Sign Up</a
             >
           </div>
         </div>
@@ -74,9 +86,10 @@
       <div
         class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
       >
-        <div class="relative ml-3">
+        <div class="relative mx-3">
           <!-- Cart Button  -->
           <button
+            *ngIf="authService.isLoggedIn()"
             type="button"
             (click)="
               cartMenuToggle = !cartMenuToggle; profileMenuToggle = false
@@ -85,41 +98,15 @@
           >
             <span class="absolute -inset-1.5"></span>
             <span class="sr-only">View Cart</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="1.5em"
-              viewBox="0 0 576 512"
-              class="h-6 w-6"
-              fill="none"
-              stroke-width="30"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path
-                fill=""
-                d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"
-              />
-            </svg>
-            <!-- <svg
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-            />
-          </svg> -->
+            <div class="text-xl w-6 h-6 text-center">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+
             <span class="sr-only">Cart</span>
             <div
-              class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-800"
+              class="absolute inline-flex items-center justify-center w-5 h-5 text-xs pt-1 font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-800"
             >
-              {{cartItems}}
+              {{cartBadge}}
             </div>
           </button>
           <!-- Cart Menu -->
@@ -133,7 +120,7 @@
           >
             <!-- Active: "bg-gray-100", Not Active: "" -->
             <div class="px-4 py-2 flex justify-between items-center">
-              <span class="font-medium">3 Items </span>
+              <span class="font-medium">{{cartItems.length}} Items </span>
               <a
                 class="text-gray-600 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                 [routerLink]="['/cart']"
@@ -146,19 +133,13 @@
               <hr class="w-[86%]" />
             </div>
             <!-- Cart Items Section -->
-            <div class="flex justify-between px-6 py-2 text-sm text-gray-700">
-              Cart Item 1
-              <span class="font-bold">{{ "26.99" | currency }}</span>
+            <div *ngIf="!cartItems.length" class="w-full flex flex-col justify-center items-center mb-4">
+              <img class="w-3/5" src="assets/empty-cart.png" alt="empty">
+              <p class="text-red-800 font-bold">Nothing Here</p>
             </div>
-
-            <div class="flex justify-between px-6 py-2 text-sm text-gray-700">
-              Cart Item 2
-              <span class="font-bold">{{ "3.99" | currency }}</span>
-            </div>
-
-            <div class="flex justify-between px-6 py-2 text-sm text-gray-700">
-              Cart Item 2
-              <span class="font-bold">{{ "126.99" | currency }}</span>
+            <div *ngFor="let item of cartItems" class="flex justify-between px-6 py-2 text-sm text-gray-700">
+              {{item?.title}}
+              <span class="font-bold">{{ item?.price | currency }}</span>
             </div>
 
             <!-- Second Horizontal Line seperator -->
@@ -168,7 +149,7 @@
             <!-- Total price section -->
             <div class="flex justify-between px-6 py-2 text-gray-700">
               Total:
-              <span class="font-bold">{{ "157.97" | currency }}</span>
+              <span class="font-bold">{{ getTotalPrice() | currency }}</span>
             </div>
             <!-- <a
               href="#"
@@ -180,11 +161,11 @@
             > -->
             <!-- Check out and Clear Button -->
             <div class="flex justify-between px-6 py-2 text-gray-700">
-              <div class="text-3xl text-red-600 hover:cursor-pointer">
+              <div class="text-3xl text-red-600 hover:cursor-pointer" (click)="emptyCart()">
                 <i class="fa-solid fa-ban"></i>
               </div>
 
-              <div class="text-3xl text-green-600 hover:cursor-pointer">
+              <div class="text-3xl text-green-600 hover:cursor-pointer" [routerLink]="['/cart']">
                 <i class="fa-regular fa-circle-check"></i>
               </div>
             </div>
@@ -196,6 +177,7 @@
           <div>
             <button
               type="button"
+              *ngIf="authService.isLoggedIn()"
               class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               id="user-menu-button"
               (click)="
@@ -206,7 +188,7 @@
             >
               <span class="absolute -inset-1.5"></span>
               <span class="sr-only">Open user menu</span>
-              <img class="h-8 w-8 rounded-full" src="assets/me.jpg" alt="" />
+              <img class="h-8 w-8 rounded-full" src="{{user?.profilePicture}}" alt="" />
             </button>
           </div>
 
@@ -230,26 +212,18 @@
             tabindex="-1"
           >
             <!-- Active: "bg-gray-100", Not Active: "" -->
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700"
-              role="menuitem"
-              tabindex="-1"
-              id="user-menu-item-0"
-              >Your Profile</a
+            <span
+              class="block px-4 py-2 font-semibold text-lg text-gray-800"
+              >Welcome {{user?.username}}</span
+            >
+            <span
+              class="block px-4 py-2 text-sm text-gray-800"
+              >Role: {{user?.role}}</span
             >
             <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700"
+              class="block px-4 py-2 text-sm text-gray-700 hover:cursor-pointer"
               role="menuitem"
-              tabindex="-1"
-              id="user-menu-item-1"
-              >Settings</a
-            >
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700"
-              role="menuitem"
+              (click)="logOut()"
               tabindex="-1"
               id="user-menu-item-2"
               >Sign out</a
@@ -284,10 +258,18 @@
         >About</a
       >
       <a
+        *ngIf="!authService.isLoggedIn()"
         [routerLink]="['/signin']"
         [routerLinkActive]="['bg-gray-900', 'text-white']"
         class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
         >Sign In</a
+      >
+      <a
+        *ngIf="!authService.isLoggedIn()"
+        [routerLink]="['/signup']"
+        [routerLinkActive]="['bg-gray-900', 'text-white']"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+        >Sign Up</a
       >
     </div>
   </div>
