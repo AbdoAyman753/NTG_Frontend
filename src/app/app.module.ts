@@ -12,8 +12,12 @@ import { ErrorModule } from './pages/error/error.module';
 import { StoreModule } from './pages/store/store.module';
 import { CartComponent } from './pages/cart/cart.component';
 import { GamesService } from './services/games.service';
-import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
+import { UserService } from './services/user.service';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,8 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
     NavbarComponent,
     FooterComponent,
     CartComponent,
-    SignUpComponent
+    SignUpComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,9 +35,11 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
     StoreModule,
     ErrorModule,
     HttpClientModule,
-    AppRoutingModule
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
   ],
-  providers: [GamesService],
+  providers: [GamesService,AuthService, CookieService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
