@@ -1,1 +1,60 @@
-<p>sign-in works!</p>
+<div class="bg-grey-lighter flex flex-col">
+  <div
+    class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2"
+  >
+    <div
+      class="bg-gray-800 flex flex-col items-center px-6 py-8 rounded-xl shadow-md text-slate-100 w-full"
+    >
+      <img src="assets/Logo.png" alt="Logo" class="text-center w-[8rem] pb-8" />
+      <h1 class="mb-8 text-3xl text-center font-bold">Welcome</h1>
+      <form [formGroup]="signInValidation" class="row" novalidate>
+        <div class="form-outline mb-2">
+          <input
+            formControlName="email"
+            type="text"
+            class="shadow-[0_0_0px_3px] shadow-gray-700 outline-none border rounded w-full px-3 py-4 mb-2 text-gray-700 font-medium leading-tight focus:outline focus:shadow-blue-400"
+            [ngClass]="{ 'focus:shadow-red-400': !emailValid }"
+            (change)="checkEmail()"
+            placeholder="Email"
+            required
+          />
+          <label for="email" class="hidden ps-3 text-red-600" [ngClass]="{ '!block': !emailValid }">
+            Invalid Email</label
+          >
+        </div>
+
+        <div class="form-outline mb-2">
+          <input
+            formControlName="password"
+            type="password"
+            class="shadow-[0_0_0px_3px] shadow-gray-700 outline-none rounded w-full px-3 py-4 mb-2 text-gray-700 font-medium leading-tight focus:outline focus:shadow-blue-400"
+            [ngClass]="{ 'focus:shadow-red-400': !passwordValid }"
+            (change)="checkPassword()"
+            placeholder="Password"
+            required
+          />
+          <label for="password" class="invisible ps-3 text-red-600" [ngClass]="{ '!visible': !passwordValid }">
+            Invalid Password</label
+          >
+        </div>
+        <button
+          type="submit"
+          (click)="signIn()"
+          class="w-full text-center py-3 rounded bg-green-600 text-white hover:bg-green-700 focus:outline-none my-1"
+        >
+          Sign in
+        </button>
+      </form>
+    </div>
+
+    <div class="text-gray-100 font-semibold mt-6">
+      Don't have an account?
+      <a
+        class="border-b-2 pb-1 px-1 rounded-[0.25rem] border-gray-100 hover:text-gray-950 hover:border-gray-950"
+        [routerLink]="['/signup']"
+      >
+        Sign-up </a
+      > .
+    </div>
+  </div>
+</div>
