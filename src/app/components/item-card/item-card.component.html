@@ -4,15 +4,15 @@
   >
     <img
       class="w-full"
-      src={{game?.coverImage}}
+      src="{{ game?.coverImage }}"
       alt="Sunset in the mountains"
     />
 
     <div id="textArea">
       <div class="px-6 py-4 card-details-cont">
-        <div class="font-bold text-lg mb-2 text-white">{{game?.title}}</div>
+        <div class="font-bold text-lg mb-2 text-white">{{ game?.title }}</div>
         <p class="text-slate-100 text-base max-h-[72px]">
-          {{game?.description}}
+          {{ game?.description }}
         </p>
       </div>
     </div>
@@ -20,16 +20,42 @@
       <span
         *ngFor="let category of game?.categories"
         class="inline-block bg-slate-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-800 mr-2 mb-2"
-        >{{category?.name}}</span
+        >{{ category?.name }}</span
       >
     </div>
     <div class="flex flex-col items-center justify-center text-white text-xl">
       <div>
-        {{game?.price | currency}}
+        {{ game?.price | currency }}
       </div>
       <!-- <span class="text-white pt-[3.5rem]">like   cart</span> -->
-      <div id="addToCart" class="invisible text-white text-3xl">
-        <i class="fa-solid fa-circle-plus"></i>
+      <div
+        *ngIf="!owned"
+        id="addToCart"
+        class="invisible addToCart text-white text-3xl hover:cursor-pointer"
+        (click)="toggleCartState()"
+      >
+        <i
+          *ngIf="!inCart"
+          (mouseover)="hovered = true"
+          (mouseout)="hovered = false"
+          [ngClass]="{
+            'text-blue-500': hovered,
+          }"
+          class="fa-solid fa-circle-plus"
+        ></i>
+        <i
+          *ngIf="inCart"
+          (mouseover)="hovered = true"
+          (mouseout)="hovered = false"
+          [ngClass]="{
+            'fa-circle-check': !hovered,
+            'fa-circle-minus text-red-600': hovered
+          }"
+          class="fa-solid  text-green-600"
+        ></i>
+      </div>
+      <div *ngIf="owned" class="invisible addToCart text-white text-xl pt-2">
+        <p>Owned</p>
       </div>
     </div>
   </div>
