@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Cart, CartItem } from 'src/app/models/cart.model';
+import { TokenService } from 'src/app/services/token.service';
+import { UserApiService } from 'src/app/services/user-api.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-cart',
@@ -7,30 +9,50 @@ import { Cart, CartItem } from 'src/app/models/cart.model';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  cart: Cart = {
-    items: [
-      // {
-      //   title: 'Dark Souls III',
-      //   id: 2,
-      //   price: 9.99,
-      //   description: 'Lorem Ipsum dolor sit amet, consectetur adipiscing elit',
-      //   coverImage: 'assets/fortnite.jpg',
-      // },
-    ],
-  };
-  dataSource: Array<CartItem> = [];
-  displayedColumns: Array<string> = [
-    'title',
-    'price',
-    'description',
-    'totalPrice',
-    'action'
-  ];
+  constructor(
+    private userService: UserService,
+    private tokenService: TokenService,
+    private userApiService: UserApiService
+  ) {}
+  user: any;
+  successModal = false;
 
+  ngOnInit(): void {
+    this.userService.getUser().subscribe((data) => {
+      this.user = data;
+    });
+  }
 
+  getTotalPrice() {
+    let total = 0;
+    this.user.cartGames.forEach((element: any) => {
+      total += element.price;
+    });
+    return total;
+  }
 
+  removeIterm(item: any) {
+    this.user?.cartGames.splice(this.user?.cartGames.indexOf(item), 1);
+    //update userService and tokenService
+    this.userService.updateUser(this.user);
+    this.tokenService.saveUser(this.user);
+  }
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  checkOut() {
+    // console.log([...this.user.cartGames, ...this.user.library]);
+    this.userApiService.updateLibrary(this.user).subscribe(data => {
+      console.log(data);
+      if(data){
+        this.user.library = this.user.cartGames;
+        this.user.cartGames = [];
+        data.cartGames = [];
+        this.userService.updateUser(data);
+        this.tokenService.saveUser(data);
+        this.successModal = true;
+        setTimeout(() => {
+          this.successModal = false;
+        }, 3000);
+      }
+    });
+  }
 }
