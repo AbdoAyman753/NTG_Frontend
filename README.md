@@ -18,7 +18,7 @@ This project was generated with [Angular CLI] version 16.0.0.
 
 ## Setup
 1) Download source code.
-2) Run npm install in terminal.
+2) Run `npm install` in terminal.
 3) Change backend API to your apis in (AuthService - GamesService - UserApiService )
-4) Run ng serve -o to run the project.
+4) Run `ng serve -o` to run the project.
 
