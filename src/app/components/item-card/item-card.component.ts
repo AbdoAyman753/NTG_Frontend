@@ -1,5 +1,6 @@
 import {
   Component,
+  HostListener,
   Input,
   OnChanges,
   OnInit,
@@ -91,7 +92,7 @@ export class ItemCardComponent implements OnInit, OnChanges {
       console.log("before update");
       this.userService.updateUser(this.user);
       this.tokenService.saveUser(this.user);
-      this.updateCart();
+      // this.updateCart();
     }
   }
 
@@ -106,5 +107,10 @@ export class ItemCardComponent implements OnInit, OnChanges {
     // this.userApiService.getUsers().subscribe(data=>console.log(data));
     // console.log(this.tokenService.getUser());
     // console.log(this.tokenService.getToken());
+  }
+
+  @HostListener('window:beforeunload')
+  sendDataBeforeUnload() {
+    this.updateCart();
   }
 }
