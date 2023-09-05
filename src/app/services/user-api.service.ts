@@ -15,7 +15,6 @@ export class UserApiService {
   // Http Options
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${this.tokenService.getToken()}`,
     }), // Include this line to send cookies or other credentials
   };
